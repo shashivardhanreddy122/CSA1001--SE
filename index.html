@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>QuickBite | Premium Food Delivery & Restaurant Ordering</title>
+  <!-- Font Awesome for Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <!-- Stylesheets -->
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+  <!-- Navigation Bar -->
+  <header class="header-nav">
+    <div class="container nav-container">
+      <a href="index.html" class="logo">
+        <i class="fa-solid fa-utensils"></i> Quick<span>Bite</span>
+      </a>
+      <nav class="nav-menu">
+        <a href="index.html" class="nav-link active">Home</a>
+        <a href="dashboard.html" class="nav-link">Dashboard</a>
+        <a href="cart.html" class="nav-cart-btn">
+          <i class="fa-solid fa-bag-shopping"></i> Cart
+          <span class="cart-badge" style="display: none;">0</span>
+        </a>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Hero Section -->
+  <section class="hero-section">
+    <div class="container">
+      <h1 class="hero-title">Delicious food, delivered to <span>your doorstep</span></h1>
+      <p class="hero-subtitle">Order from the best local gourmet restaurants with lightning-fast delivery.</p>
+      
+      <!-- Search & Filters -->
+      <div class="search-filter-bar">
+        <div class="search-box">
+          <i class="fa-solid fa-magnifying-glass" style="color: var(--text-muted); margin-right: 12px;"></i>
+          <input type="text" id="restaurant-search" placeholder="Search for restaurants, cuisines, dishes...">
+        </div>
+        <div class="cuisine-filters" id="filters-container">
+          <button class="filter-btn active" data-cuisine="all">All Cuisines</button>
+          <button class="filter-btn" data-cuisine="burgers">Burgers</button>
+          <button class="filter-btn" data-cuisine="italian">Italian</button>
+          <button class="filter-btn" data-cuisine="japanese">Japanese</button>
+          <button class="filter-btn" data-cuisine="healthy">Healthy</button>
+          <button class="filter-btn" data-cuisine="desserts">Desserts</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Restaurants Section -->
+  <section class="container" style="margin-bottom: 80px;">
+    <div class="section-header">
+      <h2 class="section-title">Popular Restaurants Nearby</h2>
+    </div>
+    
+    <!-- Dynamic Restaurant Grid -->
+    <div class="restaurant-grid" id="restaurants-container">
+      <!-- Cards will be populated dynamically via JavaScript -->
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <div class="container">
+      <div class="footer-logo">
+        <i class="fa-solid fa-utensils"></i> Quick<span>Bite</span>
+      </div>
+      <p class="footer-text" style="margin-bottom: 16px;">Gourmet restaurants. Instant delivery. Ultimate satisfaction.</p>
+      <p class="footer-text">© 2026 QuickBite App. All rights reserved. Designed for College Software Engineering Assignment.</p>
+    </div>
+  </footer>
+
+  <!-- Scripts -->
+  <script src="js/data.js"></script>
+  <script src="js/cart.js"></script>
+  <script>
+    // Local script for homepage rendering and search/filtering
+    document.addEventListener('DOMContentLoaded', () => {
+      const container = document.getElementById('restaurants-container');
+      const searchInput = document.getElementById('restaurant-search');
+      const filterButtons = document.querySelectorAll('.filter-btn');
+      
+      let activeFilter = 'all';
+      let searchQuery = '';
+
+      // Function to render restaurants based on search & filter
+      function renderRestaurants() {
+        container.innerHTML = '';
+        
+        // Filter the mock data list
+        const filtered = RESTAURANTS_DATA.filter(rest => {
+          const matchesCuisine = activeFilter === 'all' || 
+            rest.cuisine.toLowerCase().includes(activeFilter.toLowerCase());
+            
+          const matchesSearch = rest.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+            rest.cuisine.toLowerCase().includes(searchQuery.toLowerCase());
+            
+          return matchesCuisine && matchesSearch;
+        });
+
+        if (filtered.length === 0) {
+          container.innerHTML = `
+            <div class="empty-state" style="grid-column: 1 / -1;">
+              <div class="empty-state-icon"><i class="fa-solid fa-magnifying-glass-minus"></i></div>
+              <h3>No restaurants found</h3>
+              <p>Try resetting your search query or choosing another cuisine filter.</p>
+            </div>
+          `;
+          return;
+        }
+
+        // Render cards
+        filtered.forEach(rest => {
+          const promoBadge = rest.deliveryFee === 0 ? `<div class="card-badge-promo">Free Delivery</div>` : '';
+          
+          const cardHtml = `
+            <div class="restaurant-card">
+              <div class="card-img-wrapper">
+                <img src="${rest.bannerImage}" alt="${rest.name}">
+                ${promoBadge}
+                <div class="card-badge-time">${rest.deliveryTime}</div>
+              </div>
+              <div class="card-content">
+                <div class="card-header-row">
+                  <h3 class="restaurant-name">${rest.name}</h3>
+                  <div class="restaurant-rating">
+                    <i class="fa-solid fa-star"></i> ${rest.rating.toFixed(1)}
+                  </div>
+                </div>
+                <p class="restaurant-cuisine">${rest.cuisine}</p>
+                <div class="card-footer">
+                  <div class="delivery-fee">
+                    Delivery: <span>${rest.deliveryFee === 0 ? 'Free' : '$' + rest.deliveryFee.toFixed(2)}</span>
+                  </div>
+                  <a href="menu.html?id=${rest.id}" class="view-menu-btn">
+                    View Menu <i class="fa-solid fa-arrow-right"></i>
+                  </a>
+                </div>
+              </div>
+            </div>
+          `;
+          container.innerHTML += cardHtml;
+        });
+      }
+
+      // Handle search keyup input
+      searchInput.addEventListener('input', (e) => {
+        searchQuery = e.target.value.trim();
+        renderRestaurants();
+      });
+
+      // Handle cuisine filter chips click
+      filterButtons.forEach(btn => {
+        btn.addEventListener('click', () => {
+          // Update active class
+          filterButtons.forEach(b => b.classList.remove('active'));
+          btn.classList.add('active');
+          
+          activeFilter = btn.getAttribute('data-cuisine');
+          renderRestaurants();
+        });
+      });
+
+      // Initial Render
+      renderRestaurants();
+    });
+  </script>
+</body>
+</html>

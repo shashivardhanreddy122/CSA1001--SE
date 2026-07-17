@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>QuickBite | Restaurant Manager Dashboard</title>
+  <!-- Font Awesome for Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <!-- Stylesheets -->
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+  <!-- Navigation Bar -->
+  <header class="header-nav">
+    <div class="container nav-container">
+      <a href="index.html" class="logo">
+        <i class="fa-solid fa-utensils"></i> Quick<span>Bite</span>
+      </a>
+      <nav class="nav-menu">
+        <a href="index.html" class="nav-link">Home</a>
+        <a href="dashboard.html" class="nav-link active">Dashboard</a>
+        <a href="cart.html" class="nav-cart-btn">
+          <i class="fa-solid fa-bag-shopping"></i> Cart
+          <span class="cart-badge" style="display: none;">0</span>
+        </a>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Main Content Wrapper -->
+  <main class="container dashboard-wrapper">
+    
+    <div class="section-header">
+      <h1 class="section-title">Restaurant Operations Control</h1>
+      <button class="refresh-btn" id="refresh-dashboard-btn">
+        <i class="fa-solid fa-arrows-rotate" style="margin-right: 6px;"></i> Refresh Orders
+      </button>
+    </div>
+
+    <!-- Operations Performance Stats -->
+    <div class="stats-grid">
+      <!-- Card 1: Revenue -->
+      <div class="stat-card" style="border-top: 4px solid var(--success);">
+        <span class="stat-card-title">Total Revenue</span>
+        <span class="stat-card-value" id="stats-revenue">$0.00</span>
+      </div>
+      <!-- Card 2: Orders Count -->
+      <div class="stat-card" style="border-top: 4px solid var(--info);">
+        <span class="stat-card-title">Total Orders</span>
+        <span class="stat-card-value" id="stats-orders">0</span>
+      </div>
+      <!-- Card 3: Active Orders -->
+      <div class="stat-card" style="border-top: 4px solid var(--warning);">
+        <span class="stat-card-title">Active Orders</span>
+        <span class="stat-card-value" id="stats-active">0</span>
+      </div>
+      <!-- Card 4: Avg Ticket -->
+      <div class="stat-card" style="border-top: 4px solid var(--primary);">
+        <span class="stat-card-title">Avg. Ticket Size</span>
+        <span class="stat-card-value" id="stats-average">$0.00</span>
+      </div>
+    </div>
+
+    <!-- Active Orders Management Table -->
+    <div class="orders-table-wrapper">
+      <div class="orders-table-header">
+        <h2 class="table-title">Incoming & Active Orders</h2>
+      </div>
+
+      <table class="orders-table">
+        <thead>
+          <tr>
+            <th>Order ID</th>
+            <th>Date & Time</th>
+            <th>Customer & Address</th>
+            <th>Restaurant</th>
+            <th>Items Placed</th>
+            <th>Grand Total</th>
+            <th>Order Status</th>
+            <th>Operations Actions</th>
+          </tr>
+        </thead>
+        <tbody id="dashboard-orders-tbody">
+          <!-- Populated dynamically via JS -->
+        </tbody>
+      </table>
+
+      <!-- Empty Orders State -->
+      <div id="dashboard-empty-state" class="empty-state" style="display: none; padding: 60px 0;">
+        <div class="empty-state-icon" style="font-size: 3rem; color: #ced6e0;">
+          <i class="fa-solid fa-inbox"></i>
+        </div>
+        <h3>No orders received yet</h3>
+        <p style="margin-top: 4px;">Orders placed on the checkout screen will show up here.</p>
+      </div>
+
+    </div>
+
+  </main>
+
+  <!-- Footer -->
+  <footer>
+    <div class="container">
+      <div class="footer-logo">
+        <i class="fa-solid fa-utensils"></i> Quick<span>Bite</span>
+      </div>
+      <p class="footer-text" style="margin-bottom: 16px;">Gourmet restaurants. Instant delivery. Ultimate satisfaction.</p>
+      <p class="footer-text">© 2026 QuickBite App. All rights reserved. Designed for College Software Engineering Assignment.</p>
+    </div>
+  </footer>
+
+  <!-- Scripts -->
+  <script src="js/data.js"></script>
+  <script src="js/cart.js"></script>
+  <script src="js/dashboard.js"></script>
+</body>
+</html>

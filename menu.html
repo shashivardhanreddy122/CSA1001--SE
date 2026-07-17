@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>QuickBite | Restaurant Menu</title>
+  <!-- Font Awesome for Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <!-- Stylesheets -->
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+  <!-- Navigation Bar -->
+  <header class="header-nav">
+    <div class="container nav-container">
+      <a href="index.html" class="logo">
+        <i class="fa-solid fa-utensils"></i> Quick<span>Bite</span>
+      </a>
+      <nav class="nav-menu">
+        <a href="index.html" class="nav-link">Home</a>
+        <a href="dashboard.html" class="nav-link">Dashboard</a>
+        <a href="cart.html" class="nav-cart-btn">
+          <i class="fa-solid fa-bag-shopping"></i> Cart
+          <span class="cart-badge" style="display: none;">0</span>
+        </a>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Main Content Wrapper -->
+  <main class="container">
+    
+    <!-- Dynamic Restaurant Banner -->
+    <div class="restaurant-banner" id="restaurant-banner-section" style="background-image: url('');">
+      <div class="banner-info" id="restaurant-banner-info">
+        <!-- Will be loaded dynamically -->
+        <h1 class="banner-name">Loading Restaurant...</h1>
+        <div class="banner-meta">
+          <span class="banner-rating"><i class="fa-solid fa-star"></i> --</span>
+          <span>•</span>
+          <span id="banner-delivery-time">-- min</span>
+          <span>•</span>
+          <span id="banner-delivery-fee">Delivery: $--</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Main Layout (Menu Left, Cart Summary Right) -->
+    <div class="menu-layout">
+      
+      <!-- Menu Items -->
+      <section>
+        <h2 class="section-title" style="margin-bottom: 24px;">Menu Dishes</h2>
+        <div class="menu-items-section" id="menu-items-container">
+          <!-- Will be loaded dynamically -->
+        </div>
+      </section>
+
+      <!-- Sticky Sidebar Cart Summary -->
+      <aside class="sidebar-cart-box">
+        <h3 class="sidebar-cart-title">
+          <span>Your Basket</span>
+          <i class="fa-solid fa-shopping-basket" style="color: var(--primary);"></i>
+        </h3>
+        
+        <!-- Cart Items List -->
+        <div class="sidebar-cart-items" id="sidebar-cart-items">
+          <!-- Populated dynamically -->
+        </div>
+
+        <!-- Totals Details -->
+        <div class="sidebar-cart-totals">
+          <div class="sidebar-total-row">
+            <span>Subtotal</span>
+            <span id="sidebar-subtotal">$0.00</span>
+          </div>
+          <div class="sidebar-total-row">
+            <span>Delivery Fee</span>
+            <span id="sidebar-delivery">$0.00</span>
+          </div>
+          <div class="sidebar-total-row">
+            <span>Estimated Tax (8%)</span>
+            <span id="sidebar-tax">$0.00</span>
+          </div>
+          <div class="sidebar-total-row grand-total">
+            <span>Total</span>
+            <span id="sidebar-grand-total">$0.00</span>
+          </div>
+        </div>
+
+        <!-- Checkout Action Button -->
+        <button class="sidebar-checkout-btn" id="sidebar-checkout-btn" disabled onclick="location.href='cart.html'">
+          Go to Checkout
+        </button>
+      </aside>
+
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <footer>
+    <div class="container">
+      <div class="footer-logo">
+        <i class="fa-solid fa-utensils"></i> Quick<span>Bite</span>
+      </div>
+      <p class="footer-text" style="margin-bottom: 16px;">Gourmet restaurants. Instant delivery. Ultimate satisfaction.</p>
+      <p class="footer-text">© 2026 QuickBite App. All rights reserved. Designed for College Software Engineering Assignment.</p>
+    </div>
+  </footer>
+
+  <!-- Scripts -->
+  <script src="js/data.js"></script>
+  <script src="js/cart.js"></script>
+  <script src="js/menu.js"></script>
+</body>
+</html>

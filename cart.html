@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>QuickBite | Checkout Basket</title>
+  <!-- Font Awesome for Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <!-- Stylesheets -->
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+  <!-- Navigation Bar -->
+  <header class="header-nav">
+    <div class="container nav-container">
+      <a href="index.html" class="logo">
+        <i class="fa-solid fa-utensils"></i> Quick<span>Bite</span>
+      </a>
+      <nav class="nav-menu">
+        <a href="index.html" class="nav-link">Home</a>
+        <a href="dashboard.html" class="nav-link">Dashboard</a>
+        <a href="cart.html" class="nav-cart-btn active">
+          <i class="fa-solid fa-bag-shopping"></i> Cart
+          <span class="cart-badge" style="display: none;">0</span>
+        </a>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Main Content Wrapper -->
+  <main class="container">
+    
+    <!-- Cart Layout Grid -->
+    <div class="cart-layout" id="cart-page-content">
+      
+      <!-- Left Column: Cart Items -->
+      <section class="cart-items-panel">
+        <h2 class="cart-items-header">Your Checkout Items</h2>
+        <div class="cart-item-list" id="cart-items-list">
+          <!-- Dynamically populated -->
+        </div>
+      </section>
+
+      <!-- Right Column: Checkout Form & Total -->
+      <aside class="checkout-panel">
+        <h3 class="checkout-panel-title">Order Checkout</h3>
+        
+        <form id="checkout-form">
+          <div class="form-group">
+            <label for="cust-name">Full Name</label>
+            <input type="text" id="cust-name" required placeholder="John Doe">
+          </div>
+          <div class="form-group">
+            <label for="cust-phone">Phone Number</label>
+            <input type="tel" id="cust-phone" required placeholder="(123) 456-7890">
+          </div>
+          <div class="form-group">
+            <label for="cust-address">Delivery Address</label>
+            <textarea id="cust-address" rows="3" required placeholder="123 Main St, Apt 4B, City, ZIP"></textarea>
+          </div>
+          
+          <h4 style="margin-top: 24px; margin-bottom: 12px; font-size: 0.95rem; font-weight: 700; color: var(--secondary);">
+            Payment Information (Simulated)
+          </h4>
+          <div class="form-group">
+            <label for="payment-method">Payment Method</label>
+            <select id="payment-method">
+              <option value="cash">Cash on Delivery (COD)</option>
+              <option value="card">Credit / Debit Card</option>
+            </select>
+          </div>
+          <div id="card-details-fields" style="display: none;">
+            <div class="form-group">
+              <label for="card-num">Card Number</label>
+              <input type="text" id="card-num" placeholder="0000 0000 0000 0000">
+            </div>
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px;">
+              <div class="form-group">
+                <label for="card-expiry">Expiry Date</label>
+                <input type="text" id="card-expiry" placeholder="MM/YY">
+              </div>
+              <div class="form-group">
+                <label for="card-cvv">CVV</label>
+                <input type="password" id="card-cvv" placeholder="123">
+              </div>
+            </div>
+          </div>
+
+          <!-- Checkout Prices Summary -->
+          <div class="checkout-summary-box">
+            <div class="checkout-summary-row">
+              <span>Subtotal</span>
+              <span id="checkout-subtotal">$0.00</span>
+            </div>
+            <div class="checkout-summary-row">
+              <span>Delivery Fee</span>
+              <span id="checkout-delivery">$0.00</span>
+            </div>
+            <div class="checkout-summary-row">
+              <span>Tax (8%)</span>
+              <span id="checkout-tax">$0.00</span>
+            </div>
+            <div class="checkout-summary-row grand-total">
+              <span>Total Price</span>
+              <span id="checkout-grand-total">$0.00</span>
+            </div>
+          </div>
+
+          <button type="submit" class="place-order-btn" id="place-order-btn">
+            Place Order <i class="fa-solid fa-chevron-right" style="margin-left: 6px;"></i>
+          </button>
+        </form>
+      </aside>
+
+    </div>
+
+    <!-- Empty State Container -->
+    <div id="cart-empty-state" class="empty-state" style="display: none; padding: 100px 0;">
+      <div class="empty-state-icon" style="font-size: 4rem; color: #ced6e0; margin-bottom: 24px;">
+        <i class="fa-solid fa-cart-shopping"></i>
+      </div>
+      <h2 style="font-size: 1.8rem; margin-bottom: 12px;">Your shopping cart is empty</h2>
+      <p style="color: var(--text-muted); margin-bottom: 32px; font-weight: 500;">
+        Add some delicious items from our local restaurants to satisfy your hunger.
+      </p>
+      <a href="index.html" class="sidebar-checkout-btn" style="display: inline-block; width: auto; padding: 14px 36px;">
+        Browse Restaurants
+      </a>
+    </div>
+
+  </main>
+
+  <!-- Footer -->
+  <footer>
+    <div class="container">
+      <div class="footer-logo">
+        <i class="fa-solid fa-utensils"></i> Quick<span>Bite</span>
+      </div>
+      <p class="footer-text" style="margin-bottom: 16px;">Gourmet restaurants. Instant delivery. Ultimate satisfaction.</p>
+      <p class="footer-text">© 2026 QuickBite App. All rights reserved. Designed for College Software Engineering Assignment.</p>
+    </div>
+  </footer>
+
+  <!-- Scripts -->
+  <script src="js/data.js"></script>
+  <script src="js/cart.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const itemsListContainer = document.getElementById('cart-items-list');
+      const checkoutForm = document.getElementById('checkout-form');
+      const cardDetailsFields = document.getElementById('card-details-fields');
+      const paymentMethodSelect = document.getElementById('payment-method');
+      const cartContentGrid = document.getElementById('cart-page-content');
+      const emptyStateBox = document.getElementById('cart-empty-state');
+
+      // Price labels
+      const subtotalEl = document.getElementById('checkout-subtotal');
+      const deliveryEl = document.getElementById('checkout-delivery');
+      const taxEl = document.getElementById('checkout-tax');
+      const totalEl = document.getElementById('checkout-grand-total');
+
+      // Toggles simulated card fields
+      paymentMethodSelect.addEventListener('change', (e) => {
+        if (e.target.value === 'card') {
+          cardDetailsFields.style.display = 'block';
+          // Mark fields required
+          document.getElementById('card-num').required = true;
+          document.getElementById('card-expiry').required = true;
+          document.getElementById('card-cvv').required = true;
+        } else {
+          cardDetailsFields.style.display = 'none';
+          document.getElementById('card-num').required = false;
+          document.getElementById('card-expiry').required = false;
+          document.getElementById('card-cvv').required = false;
+        }
+      });
+
+      // Renders the checkout items and totals
+      function renderCartCheckout() {
+        const cart = getCart();
+
+        // Check if cart is empty
+        if (cart.items.length === 0) {
+          cartContentGrid.style.display = 'none';
+          emptyStateBox.style.display = 'block';
+          return;
+        }
+
+        cartContentGrid.style.display = 'grid';
+        emptyStateBox.style.display = 'none';
+        
+        itemsListContainer.innerHTML = '';
+
+        cart.items.forEach(item => {
+          const itemRow = document.createElement('div');
+          itemRow.className = 'cart-item-row';
+          itemRow.innerHTML = `
+            <img src="${item.image}" alt="${item.name}" class="cart-item-img">
+            <div class="cart-item-details">
+              <h3 class="cart-item-title">${item.name}</h3>
+              <p class="cart-item-price-unit">$${item.price.toFixed(2)} each</p>
+            </div>
+            
+            <div class="quantity-controller">
+              <button class="qty-btn dec-btn" data-id="${item.id}">-</button>
+              <div class="qty-number">${item.quantity}</div>
+              <button class="qty-btn inc-btn" data-id="${item.id}">+</button>
+            </div>
+            
+            <div class="cart-item-price-sub">$${(item.price * item.quantity).toFixed(2)}</div>
+            
+            <button class="cart-item-remove" data-id="${item.id}" title="Remove Item">
+              <i class="fa-solid fa-trash-can"></i>
+            </button>
+          `;
+
+          // Quantity controls
+          itemRow.querySelector('.dec-btn').addEventListener('click', () => {
+            updateQuantity(item.id, -1);
+            renderCartCheckout();
+          });
+
+          itemRow.querySelector('.inc-btn').addEventListener('click', () => {
+            updateQuantity(item.id, 1);
+            renderCartCheckout();
+          });
+
+          // Remove control
+          itemRow.querySelector('.cart-item-remove').addEventListener('click', () => {
+            removeFromCart(item.id);
+            renderCartCheckout();
+          });
+
+          itemsListContainer.appendChild(itemRow);
+        });
+
+        // Resolve delivery fee from Mock Data
+        let cartDeliveryFee = 2.00;
+        const restObj = RESTAURANTS_DATA.find(r => r.id === cart.restaurantId);
+        if (restObj) {
+          cartDeliveryFee = restObj.deliveryFee;
+        }
+
+        const totals = getCartTotal(cartDeliveryFee);
+        subtotalEl.textContent = `$${totals.subtotal}`;
+        deliveryEl.textContent = totals.deliveryFee === "0.00" ? 'Free' : `$${totals.deliveryFee}`;
+        taxEl.textContent = `$${totals.tax}`;
+        totalEl.textContent = `$${totals.total}`;
+      }
+
+      // Handle Form Submission -> Place Order
+      checkoutForm.addEventListener('submit', (e) => {
+        e.preventDefault();
+        
+        const cart = getCart();
+        if (cart.items.length === 0) return;
+
+        // Retrieve delivery fees
+        let cartDeliveryFee = 2.00;
+        const restObj = RESTAURANTS_DATA.find(r => r.id === cart.restaurantId);
+        if (restObj) {
+          cartDeliveryFee = restObj.deliveryFee;
+        }
+        const totals = getCartTotal(cartDeliveryFee);
+
+        // Gather customer details
+        const name = document.getElementById('cust-name').value.trim();
+        const phone = document.getElementById('cust-phone').value.trim();
+        const address = document.getElementById('cust-address').value.trim();
+
+        // Create new order
+        const orderId = 'QB-' + Math.floor(100000 + Math.random() * 900000);
+        const newOrder = {
+          id: orderId,
+          restaurantId: cart.restaurantId,
+          restaurantName: cart.restaurantName,
+          items: cart.items,
+          subtotal: totals.subtotal,
+          deliveryFee: totals.deliveryFee,
+          tax: totals.tax,
+          total: totals.total,
+          status: 'Placed', // Placed -> Preparing -> Out for Delivery -> Delivered
+          customer: { name, phone, address },
+          timestamp: Date.now()
+        };
+
+        // Save order to localStorage
+        let orders = [];
+        const existingOrders = localStorage.getItem('quickbite_orders');
+        if (existingOrders) {
+          try {
+            orders = JSON.parse(existingOrders);
+          } catch (e) {
+            console.error("Error parsing existing orders, resetting", e);
+          }
+        }
+        orders.push(newOrder);
+        localStorage.setItem('quickbite_orders', JSON.stringify(orders));
+
+        // Store the order ID we just placed as the current active tracking order ID
+        localStorage.setItem('quickbite_active_tracking_id', orderId);
+
+        // Clear the cart
+        clearCart();
+
+        // Success Alert and Redirect
+        alert(`Order successfully placed! Your Order ID is: ${orderId}`);
+        window.location.href = `tracking.html`;
+      });
+
+      // Initial Render
+      renderCartCheckout();
+    });
+  </script>
+</body>
+</html>
