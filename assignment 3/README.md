@@ -4,6 +4,16 @@ A modern, university-grade full-stack E-Commerce Analytics Dashboard built with 
 
 ---
 
+## 🖼️ UI Screenshots & Visual Demonstrations
+
+### 📊 1. Main Analytics Dashboard
+![Analytics Overview](docs/images/dashboard_analytics_mockup_1785142028394.png)
+
+### 📦 2. Orders Management Module
+![Orders Management UI](docs/images/orders_management_mockup_1785142048735.png)
+
+---
+
 ## 📐 1. System Architecture Diagram
 
 Below is the high-level architecture diagram detailing the communication flow between the React Frontend, Node.js API Server, and MongoDB Database.
